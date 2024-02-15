@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&family=Source+Code+Pro:wght@300;400&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Avancerad Miniräknare</title>
+    <style>
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+   
+      body {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background-color: rgb(255, 255, 255);
+        font-family: "Roboto Mono", monospace;
+      }
+      button {
+        margin: 0;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        text-align: center;
+        margin-top: 40px;
+      }
+      .sheet {
+        max-width: 600px;
+        position: relative;
+      }
+      .goal {
+        font-size: 12px;
+        color: grey;
+      }
+      .direction {
+        position: absolute;
+        max-height: 120px;
+        top: 90px;
+        right: 0;
+        border: none;
+        height: 100%;
+        font-size: 20px;
+        background-color: transparent;
+        margin-right: -20px;
+        background-color: rgba(119, 119, 164, 0.28);
+        border-radius: 5px;
+        padding: 0 5px;
+        font-family: "VT323", monospace;
+        cursor: pointer;
+        background: linear-gradient(
+          180deg,
+          rgb(203, 212, 227) 0%,
+          rgb(210, 209, 240) 100%
+        );
+        transition: all 0.2s cubic-bezier(0.9, -0.4, 0.77, 1.9);
+      }
+      .previous {
+        left: -40px;
+
+        width: 20px;
+
+      }
+      .previous:before {
+        content: "<"
+      }
+
+      .step {
+        position: relative;
+      }
+      .fadeIn {
+        opacity: 0;
+        animation-name: fadeIn;
+        animation-duration: 5s;
+        /* animation-delay: 2s; */
+        animation-fill-mode: forwards;
+        margin-top: 15px;
+      }
+
+      .hint {
+        padding: 9px 18px;
+        background: rgb(71, 135, 255);
+        background: linear-gradient(
+          180deg,
+          rgb(166, 187, 227) 0%,
+          rgba(155, 152, 255, 1) 100%
+        );
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 700;
+        transition: all 0.4s cubic-bezier(0.9, -0.4, 0.77, 1.9);
+      }
+      .next:hover {
+        transform: scaleY(1.05);
+      }
+      .hint:hover {
+        transform: scale(1.15);
+      }
+      .code-div {
+        background-color: rgb(38, 38, 38);
+        padding: 10px 20px;
+      }
+      .code {
+        font-family: "VT323", monospace;
+        background-color: rgb(38, 38, 38);
+        color: rgb(22, 212, 22);
+
+        letter-spacing: 3px;
+
+        line-height: calc(100%+4px);
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+
+  <div class="sheet">
+    <button class="direction previous" id="previous"></button>
+    <button class="direction next" id="next">></button>
+    <div class="step1 step">
+      <h4>step 1</h4>
+      <p>
+        Look at all those buttons! Wouldn't it be nice if we could interact with
+        them somehow? Let's start by getting a hold of the button with number
+        the 1! <br />
+        <span class="goal"
+          >You are ready for step 2 when you can see your button logged in the
+          console.</span
+        >
+      </p>
+      <button class="hint fadeIn" id="hint1">Show hint</button>
+      <div class="hidden" id="show_hint1">
+        <p>
+          Add an Id to your button. <br />
+          use document.querySelector combined with your buttonID tog get a hold
+          of your desired button. <br />
+        </p>
+        <button class="hint fadeIn" id="hint2">Show another hint</button>
+        <div class="hidden" id="show_hint2">
+          <p>
+            if you have added id="button1" to your button-element, we can query
+            for it like so:<br />
+          </p>
+          <div class="code-div">
+            <span class="code">
+              const buttonOne = document.querySelector(".button1")</span
+            >
+          </div>
+
+          <p>
+            if you console.log(buttonOne) you should see your element being
+            logged in the console, and you are ready for the next step!
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="step step2 hidden">
+      <h4>step 2</h4>
+      <p>
+        Now that we have our button stored in a variable, let's add an event
+        listener to it! <br />
+        When clicking on the button, we want to store the the number value in a
+        variable
+        <br />
+        <span class="goal"
+          >Before proceeding to the next step, you should have an event listener
+          attached to your button. Clicking on your button should update a
+          variable with your buttons value<br
+        /></span>
+      </p>
+      <button class="hint fadeIn" id="hint3">Show hint</button>
+      <div class="hidden" id="show_hint3">
+        <p>
+          Let's start by declaring our variable I'll name mine "firstValue",
+          this variable will be updated by our button, so it is not a
+          constant<br />
+        </p>
+        <div class="code-div">
+          <span class="code">let firstValue</span>
+        </div>
+
+        <p>
+          Next we should add the event listener to our button, and when the
+          button is clicked, we will update firstValue
+        </p>
+        <button class="hint fadeIn" id="hint4">Show another hint</button>
+        <div class="hidden" id="show_hint4">
+          <br />
+          <div class="code-div">
+            <span class="code">
+              buttonOne.addEventListener("click", () =>{<br />
+              firstValue = 1 <br />
+              })</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step step3 hidden">
+      <h4>step 3</h4>
+      <p>
+        Now that's all good and dandy, but that's not really how calculators
+        work right? <br />
+        We don't want our value to stay as 1 if you press the button again.
+        <br />
+        <span class="goal"
+          >Your button should update firstValue like a real calculator, (1 if
+          pressed once, 11 if pressed twice etc)<br
+        /></span>
+      </p>
+      <button class="hint fadeIn" id="hint5">Show hint</button>
+      <div class="hidden" id="show_hint5">
+        <p>
+          Adding strings together does not work the same as adding integers
+          together.
+          <br />
+          <br />
+        </p>
+
+        <button class="hint fadeIn" id="hint6">Show another hint</button>
+        <div class="hidden" id="show_hint6">
+          <p>
+            We initiate our firstValue as an empty string. And in our event
+            listener we add "1" <br />
+            "" + "1" = "1"
+
+            <br />
+          </p>
+
+          <div class="code-div">
+            <span class="code">
+              let firstValue = "" <br />
+              <br />
+              buttonOne.addEventListener("click", () => {<br />
+              <br />
+              firstValue = firstValue+"1" <br /><br />
+              })</span
+            >
+          </div>
+          <br />
+          next time around firstValue will be "1" <br />
+          "1" + "1" = "11"
+          <br />
+        </div>
+      </div>
+    </div>
+
+    <div class="step step4 hidden">
+      <h4>step 4</h4>
+      <p>
+        Now let's get that number up on that screen!<br />
+        <br />
+        <span class="goal"
+          >When your firstValue is being displayed in your calculator, you are
+          ready for the next step!<br
+        /></span>
+      </p>
+      <button class="hint fadeIn" id="hint7">Show hint</button>
+      <div class="hidden" id="show_hint7">
+        <p>
+          It's not easy to update something in the DOM without getting a hold of
+          it first.
+          <br />
+          <br />
+          Once we got it we have to figure out how to update the element's _text
+          content_
+          <br />
+        </p>
+
+        <button class="hint fadeIn" id="hint8">Show another hint</button>
+        <div class="hidden" id="show_hint8">
+          <p>
+            <br />
+          </p>
+
+          <div class="code-div">
+            <span class="code">
+              let firstValue = "" <br />
+              const display = document.querySelector("#display-screen")
+              <br />
+              <br />
+              buttonOne.addEventListener("click", () => {<br />
+              <br />
+              firstValue = firstValue+"1" <br />
+              display.textContent = firstValue
+              <br /><br />
+              })</span
+            >
+          </div>
+          <br />
+
+          <br />
+        </div>
+      </div>
+    </div>
+
+    <div class="step step5 hidden">
+      <h4>step 5</h4>
+      <p>
+        Well done! Now let's make this one count!
+        <br />
+        <br />
+        <span class="goal"
+          >Choose an operational button (one of: +. - , / , *) and when it's
+          clicked. Store it's operation in a variable<br
+        /></span>
+      </p>
+      <button class="hint fadeIn" id="hint9">Show hint</button>
+      <div class="hidden" id="show_hint9">
+        <p>
+          Start by declaring a variable, we know that we later will assign a
+          value to this variable.
+          <br />
+          Add an eventlistener och your operation-button. Inside your
+          eventlistener, update your newly declared variable
+        </p>
+
+        <br />
+
+        <br />
+        <button class="hint hint10" id="hint10">Show hint</button>
+        <div class="hidden" id="show_hint10">
+          <br />
+          <div class="code-div">
+            <span class="code">
+              let operator <br />
+              const plusButton = document.querySelector("#plusButton")
+              <br />
+              <br />
+              plusButton.addEventListener("click", () => {<br />
+              <br />
+              operator = "+"<br />
+              <br />
+              })</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+ <div class="step step6 hidden">
+    <h4>step 6</h4>
+    <p>1 + ?? = what?</p>
+    <p>
+      We have our first value and we have our operation locked and loaded. Now
+      we just need another value to actually make the calculation!
+    </p>
+    <span class="goal">
+      declare and correctly update a second value
+      <br />
+    </span>
+    <button class="hint fadeIn" id="hint10">Show hint</button>
+    <div class="hidden" id="show_hint10">
+      <p>
+        When we declared our operator variable, notice that we did not give in
+        an initial value.
+
+        <br />
+        we can check if operator has a value, and then update secondValue
+        instead of firstValue ,We can use this to our advantage with an if else
+        statement!
+      </p>
+
+      <br />
+
+      <br />
+      <button class="hint hint11" id="hint11">Show hint</button>
+      <div class="hidden" id="show_hint11">
+        <br />
+        <div class="code-div">
+          <span class="code">
+            let secondValue = "" <br />
+
+            <br />
+            <br />
+            buttonOne.addEventListener("click", () => {<br />
+            <br />
+            if(operator){ <br />
+            secondValue = secondValue + 1 <br />
+            } else { <br />
+            firstValue = firstValue+1 <br />
+            }
+            <br />
+            <br />
+            })
+          </span>
+        </div>
+      </div>
+    </div>
+  </div> 
+<div class="step step7 hidden">
+    <h4>step 7</h4>
+    <p>You got this!</p>
+    <p>Go get that last button and make the calculation!</p>
+    <span class="goal">
+      Display the calculated value on the screen and you are done! :D
+      <br
+    /></span>
+    <button class="hint fadeIn" id="hint9">Show hint</button>
+    <div class="hidden" id="show_hint9">
+      <p>
+        <br />
+        Add an event listener to your equals button. Inside the listener you can
+        check what kind of operation is selected and make the correct
+        calculation!
+      </p>
+
+      <br />
+      Remeber that adding strings together does not work as adding numbers
+      together, We need to turn those strings into integers!
+      <br />
+      <button class="hint hint10" id="hint10">Show hint</button>
+      <div class="hidden" id="show_hint10">
+        <p></p>
+        <br />
+
+        <div class="code-div">
+          <div class="code">
+            equalsButton.addEventListener("click", () => {<br/><br/>
+              if(operation === "+" ) {<br/> <br/>
+              const result = parseInt(firstValue) + parseInt(secondValue) <br/><br/>
+              calcScreen.TextContent = result <br/> <br/>
+              }
+              <br/> <br/>
+            })
+            <br />
+
+            <br />
+            <br />
+            buttonOne.addEventListener("click", () => {<br />
+            <br />
+            if(operator){ <br />
+            secondValue = secondValue + 1 <br />
+            } else { <br />
+            firstValue = firstValue+1 <br />
+            }
+            <br />
+            <br />
+            })
+        </div>
+      </div>
+    </div>
+  </div> 
+  </div>
+  <script type="text/javascript">
+    const calculatorInit = () => {
+      let firstValue = ""
+      let secondValue = ""
+      let operator
+      const buttonOne = document.querySelector("#buttonOne")
+      const calcScreen = document.querySelector("#calc-screen")
+      const plusButton = document.querySelector("#plus")
+      const equalsButton = document.querySelector("#equals")
+      const buttonTwo = document.querySelector("#buttonTwo")
+
+      equalsButton.addEventListener("click", () => {
+        if (operator === "+") {
+          const result = parseInt(firstValue) + parseInt(secondValue)
+          firstValue = ""
+          secondValue = ""
+          calcScreen.textContent = result
+        }
+      })
+      plusButton.addEventListener("click", () => {
+        operator = "+"
+      })
+      buttonTwo.addEventListener("click", () => {
+        if (operator) {
+          secondValue = secondValue + 2
+          calcScreen.textContent = secondValue
+        } else {
+          firstValue = firstValue + 2
+          calcScreen.textContent = firstValue
+        }
+
+      })
+
+      buttonOne.addEventListener("click", () => {
+        if (operator) {
+          secondValue = secondValue + 1
+          calcScreen.textContent = secondValue
+        } else {
+          firstValue = firstValue + 1
+          calcScreen.textContent = firstValue
+        }
+      })
+    }
+    calculatorInit()
+  </script>
+  <script type="text/javascript">
+    const init = () => {
+      let localStep = parseInt(localStorage.getItem("step"))
+      let step = localStep || 1
+
+
+      const stepElements = document.querySelectorAll(".step")
+      const totalSteps = stepElements.length
+      const previousButton = document.getElementById("previous")
+      const nextButton = document.getElementById("next")
+      const directionalButtons = document.querySelectorAll(".direction")
+
+
+      directionalButtons.forEach((button) => {
+        const direction = button.id === "next" ? "+" : "-"
+
+        button.addEventListener("click", () => changeStep(direction))
+      })
+
+      const changeStep = (direction) => {
+        if (direction === "+") {
+          step++
+        } else {
+          step--
+        }
+        updateStepElement()
+      }
+
+      const checkToRenderDirectionalButtons = () => {
+
+        if (step === 1) {
+          previousButton.classList.add("hidden")
+        }
+        if (step > 1) {
+          previousButton.classList.remove("hidden")
+        }
+        if (step === totalSteps) {
+          nextButton.classList.add("hidden")
+        }
+        if (step < totalSteps) {
+          nextButton.classList.remove("hidden")
+        }
+      }
+      const updateStepElement = () => {
+          localStorage.setItem("step", step)
+        checkToRenderDirectionalButtons()
+
+        stepElements.forEach((el) => {
+          const stepKey = "step" + step
+          el.classList.add("hidden")
+
+          if (el.classList.contains(stepKey)) {
+            el.classList.remove("hidden")
+          }
+        })
+      }
+      updateStepElement()
+      const showHint = (hintId) => {
+
+        const hintToShow = document.getElementById("show_" + hintId)
+        hintToShow.classList.remove("hidden")
+      }
+
+      const hintButtons = document.querySelectorAll(".hint")
+      hintButtons.forEach((button) => {
+        button.addEventListener("click", () => showHint(button.id))
+      })
+
+      const buttonOne = document.querySelector(".nr1")
+      const firstButton = document.querySelector("div")
+    }
+    init()
+  </script>
+</html>
